@@ -1,0 +1,50 @@
+/*Query1*/
+/* Which artist has produced the most albums?*/
+SELECT Artist.Name, COUNT(Album.AlbumId) "Number of Albums"
+FROM Artist
+JOIN Album 
+ON Album.ArtistId=Artist.ArtistId
+GROUP by Artist.Name
+ORDER by "Number of Albums" DESC
+LIMIT 10;
+
+
+/*Query2*/
+/*Top 10 albums according sales?*/
+SELECT Album.Title, sum(InvoiceLine.UnitPrice * InvoiceLine.Quantity) "Sales"
+FROM Album
+JOIN Track
+ON Album.AlbumId=Track.AlbumId
+JOIN InvoiceLine
+ON InvoiceLine.TrackId=Track.TrackId
+GROUP by album.Title
+ORDER by "Sales" DESC
+LIMIT 10;
+
+
+/*Query3*/
+/*Top geners according to earnings?*/
+SELECT Genre.Name, sum(InvoiceLine.UnitPrice * InvoiceLine.quantity) "Earnings"
+FROM genre
+JOIN Track
+ON Genre.GenreId=Track.GenreId
+JOIN InvoiceLine
+ON InvoiceLine.TrackId=Track.TrackId
+GROUP by Genre.Name
+ORDER by "Earnings" DESC
+LIMIT 10;
+
+
+/*Query4*/
+/*Which number of artists per genre?*/
+SELECT Genre.Name, count(DISTINCT Artist.ArtistId) "Number of Artists"
+FROM Genre
+JOIN Artist
+ON Artist.ArtistId=Album.ArtistId
+JOIN Album
+ON Album.AlbumId=Track.AlbumId
+JOIN Track
+ON Track.GenreId=Genre.GenreId
+GROUP by Genre.Name
+ORDER by "Number of Artists" DESC
+LIMIT 10;
